@@ -97,8 +97,10 @@ public class MedianAttributeAggregator extends AttributeAggregator {
                 break;
             case FLOAT:
                 this.medianAggregator = new MedianAggregatorFloat();
+                break;
             case LONG:
                 this.medianAggregator = new MedianAggregatorLong();
+                break;
             default:
                 throw new OperationNotSupportedException("Median not supported for " + type);
         }
