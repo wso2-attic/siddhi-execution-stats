@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+* Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -52,12 +52,15 @@ import java.util.Map;
 
 
 @Extension(
-        name = "stats",
+        name = "median",
         namespace = "stats",
-        description = "Returns the stats of aggregated events.",
+        description = "This extension returns the median of aggregated events." +
+                "\n " +
+                "As calculation of median is done for each event arrival and expiry, " +
+                "it is not recommended to use this extension for large window sizes. ",
         parameters = {
                 @Parameter(name = "arg",
-                        description = "The value that needs to be aggregated for the stats.",
+                        description = "The value that needs to be aggregated for the median.",
                         type = {DataType.INT, DataType.LONG, DataType.DOUBLE, DataType.LONG})
 
         },
@@ -66,9 +69,9 @@ import java.util.Map;
                 type = {DataType.DOUBLE}),
         examples = @Example(
                 syntax = "from inputStream#window.length(5)" +
-                        "\nselect stats:stats(value) as medianOfValues" +
+                        "\nselect stats:median(value) as medianOfValues" +
                         "\ninsert into outputStream;",
-                description = "This will returns the stats of aggregated values as a double " +
+                description = "This will returns the median of aggregated values as a double " +
                         "value for each event arrival and expiry of sliding window length 5."
         )
 )
@@ -179,6 +182,7 @@ public class MedianAttributeAggregator extends AttributeAggregator {
         public Object processRemove(Object data) {
             this.arrayList.remove(data);
             this.count--;
+            this.median = getMedian();
             return median;
         }
 
@@ -234,6 +238,7 @@ public class MedianAttributeAggregator extends AttributeAggregator {
         public Object processRemove(Object data) {
             this.arrayList.remove(data);
             this.count--;
+            this.median = getMedian();
             return median;
         }
 
@@ -287,7 +292,8 @@ public class MedianAttributeAggregator extends AttributeAggregator {
         public Object processRemove(Object data) {
             this.arrayList.remove(data);
             this.count--;
-            return this.median;
+            this.median = getMedian();
+            return median;
         }
 
 
@@ -341,6 +347,7 @@ public class MedianAttributeAggregator extends AttributeAggregator {
         public Object processRemove(Object data) {
             this.arrayList.remove(data);
             this.count--;
+            this.median = getMedian();
             return median;
         }
 

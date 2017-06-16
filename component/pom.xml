@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~ Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  ~
  ~ WSO2 Inc. licenses this file to you under the Apache License,
  ~ Version 2.0 (the "License"); you may not use this file except
@@ -29,7 +29,7 @@
 
     <artifactId>siddhi-execution-stats</artifactId>
     <packaging>bundle</packaging>
-    <name>WSO2 Siddhi Execution Extension - Median</name>
+    <name>WSO2 Siddhi Execution Extension - Stats</name>
     <url>http://wso2.org</url>
     <dependencies>
         <dependency>

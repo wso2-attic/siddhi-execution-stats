@@ -1,7 +1,7 @@
 package org.wso2.extension.siddhi.execution.stats;
 
 /*
-* Copyright (c) 2014, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+* Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ public class MedianAttributeAggregatorTestCase {
                 "define stream outputStream (tt double);";
 
         String query = "@info(name = 'query1') " + "from inputStream#window.length(5) " +
-                "select stats:stats(tt) as tt insert into filteredOutputStream";
+                "select stats:median(tt) as tt insert into filteredOutputStream";
         ExecutionPlanRuntime executionPlanRuntime = siddhiManager.
                 createExecutionPlanRuntime(inStreamDefinition + query);
 
@@ -120,7 +120,7 @@ public class MedianAttributeAggregatorTestCase {
                 "define stream outputStream (tt double);";
 
         String query = "@info(name = 'query1') " + "from inputStream#window.lengthBatch(5) " +
-                "select stats:stats(tt) as tt insert into filteredOutputStream";
+                "select stats:median(tt) as tt insert into filteredOutputStream";
         ExecutionPlanRuntime executionPlanRuntime = siddhiManager.
                 createExecutionPlanRuntime(inStreamDefinition + query);
 
@@ -170,7 +170,7 @@ public class MedianAttributeAggregatorTestCase {
                 "define stream outputStream (tt double);";
 
         String query = "@info(name = 'query1') " + "from inputStream#window.lengthBatch(5) " +
-                "select stats:stats(tt) as tt insert into filteredOutputStream";
+                "select stats:median(tt) as tt insert into filteredOutputStream";
         ExecutionPlanRuntime executionPlanRuntime = siddhiManager.
                 createExecutionPlanRuntime(inStreamDefinition + query);
 
@@ -220,7 +220,7 @@ public class MedianAttributeAggregatorTestCase {
                 "define stream outputStream (tt double);";
 
         String query = "@info(name = 'query1') " + "from inputStream#window.length(5) " +
-                "select stats:stats(tt) as tt insert into filteredOutputStream";
+                "select stats:median(tt) as tt insert into filteredOutputStream";
         ExecutionPlanRuntime executionPlanRuntime = siddhiManager.
                 createExecutionPlanRuntime(inStreamDefinition + query);
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~ Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  ~
  ~ WSO2 Inc. licenses this file to you under the Apache License,
  ~ Version 2.0 (the "License"); you may not use this file except
@@ -22,7 +22,6 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>feature</module>
         <module>component</module>
     </modules>
 
@@ -34,7 +33,7 @@
 
     <groupId>org.wso2.extension.siddhi.execution.stats</groupId>
     <artifactId>siddhi-execution-stats-parent</artifactId>
-    <name>WSO2 Siddhi Execution Extension - Median Aggregator Pom</name>
+    <name>WSO2 Siddhi Execution Extension - Stats Aggregator Pom</name>
     <version>4.0.0-SNAPSHOT</version>
 
     <profiles>
@@ -45,7 +44,6 @@
             </activation>
             <modules>
                 <module>component</module>
-                <module>feature</module>
             </modules>
         </profile>
     </profiles>
