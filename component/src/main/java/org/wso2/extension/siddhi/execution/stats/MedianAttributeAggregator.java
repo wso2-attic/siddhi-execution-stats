@@ -61,7 +61,7 @@ import java.util.Map;
         parameters = {
                 @Parameter(name = "arg",
                         description = "The value that needs to be aggregated for the median.",
-                        type = {DataType.INT, DataType.LONG, DataType.DOUBLE, DataType.LONG})
+                        type = {DataType.INT, DataType.LONG, DataType.DOUBLE, DataType.FLOAT})
 
         },
         returnAttributes = @ReturnAttribute(
