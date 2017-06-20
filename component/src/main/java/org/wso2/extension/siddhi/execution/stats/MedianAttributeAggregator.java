@@ -37,7 +37,7 @@ import org.wso2.siddhi.annotation.Extension;
 import org.wso2.siddhi.annotation.Parameter;
 import org.wso2.siddhi.annotation.ReturnAttribute;
 import org.wso2.siddhi.annotation.util.DataType;
-import org.wso2.siddhi.core.config.ExecutionPlanContext;
+import org.wso2.siddhi.core.config.SiddhiAppContext;
 import org.wso2.siddhi.core.exception.OperationNotSupportedException;
 import org.wso2.siddhi.core.executor.ExpressionExecutor;
 import org.wso2.siddhi.core.query.selector.attribute.aggregator.AttributeAggregator;
@@ -50,6 +50,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This extension returns the median of aggregated events.
+ */
 
 @Extension(
         name = "median",
@@ -79,7 +82,7 @@ public class MedianAttributeAggregator extends AttributeAggregator {
     private MedianAttributeAggregator medianAggregator;
 
     protected void init(ExpressionExecutor[] expressionExecutors, ConfigReader configReader,
-                        ExecutionPlanContext executionPlanContext) {
+                        SiddhiAppContext siddhiAppContext) {
         if (expressionExecutors.length != 1) {
             throw new OperationNotSupportedException("Median aggregator has to have exactly 1 " +
                     "parameter, currently " + expressionExecutors.length + " parameters are " +
@@ -106,7 +109,6 @@ public class MedianAttributeAggregator extends AttributeAggregator {
         }
     }
 
-
     public Attribute.Type getReturnType() {
         return Attribute.Type.DOUBLE;
     }
@@ -126,21 +128,17 @@ public class MedianAttributeAggregator extends AttributeAggregator {
         return this.medianAggregator.processRemove(data);
     }
 
-
     public Object processRemove(Object[] data) {
         return new IllegalStateException("Median cannot process data array, but found " +
                 Arrays.deepToString(data));
     }
 
-
     public Object reset() {
         return this.medianAggregator.reset();
     }
 
-
     public void start() {
     }
-
 
     public void stop() {
     }
@@ -153,13 +151,11 @@ public class MedianAttributeAggregator extends AttributeAggregator {
         this.medianAggregator.restoreState(map);
     }
 
+    private static class MedianAggregatorDouble extends MedianAttributeAggregator {
 
-    private class MedianAggregatorDouble extends MedianAttributeAggregator {
-
-        private ArrayList<Double> arrayList = new ArrayList<Double>();
+        private ArrayList<Double> arrayList = new ArrayList<>();
         private int count = 0;
         private double median;
-
 
         public Object processAdd(Object data) {
             this.arrayList.add((Double) data);
@@ -180,7 +176,6 @@ public class MedianAttributeAggregator extends AttributeAggregator {
             return this.arrayList.get(midPointA);
         }
 
-
         public Object processRemove(Object data) {
             this.arrayList.remove(data);
             this.count--;
@@ -188,34 +183,31 @@ public class MedianAttributeAggregator extends AttributeAggregator {
             return median;
         }
 
-
         public Object reset() {
-            this.arrayList = new ArrayList<Double>();
+            this.arrayList = new ArrayList<>();
             this.count = 0;
             this.median = 0.0;
             return median;
         }
 
         public Map<String, Object> currentState() {
-            Map<String, Object> state = new HashMap();
-            state.put("Median", Double.valueOf(this.median));
-            state.put("Count", Integer.valueOf(this.count));
+            Map<String, Object> state = new HashMap<>();
+            state.put("Median", this.median);
+            state.put("Count", this.count);
             return state;
         }
 
         public void restoreState(Map<String, Object> state) {
-            this.median = ((Double) state.get("Median")).doubleValue();
-            this.count = ((Integer) state.get("Count")).intValue();
-
+            this.median = (Double) state.get("Median");
+            this.count = (Integer) state.get("Count");
         }
     }
 
-    private class MedianAggregatorLong extends MedianAttributeAggregator {
+    private static class MedianAggregatorLong extends MedianAttributeAggregator {
 
-        private ArrayList<Long> arrayList = new ArrayList<Long>();
+        private ArrayList<Long> arrayList = new ArrayList<>();
         private int count = 0;
         private double median;
-
 
         public Object processAdd(Object data) {
             this.arrayList.add((Long) data);
@@ -232,10 +224,8 @@ public class MedianAttributeAggregator extends AttributeAggregator {
                 int midPointB = midPointA - 1;
                 return (this.arrayList.get(midPointA) + this.arrayList.get(midPointB)) / 2.0;
             }
-
             return this.arrayList.get(midPointA);
         }
-
 
         public Object processRemove(Object data) {
             this.arrayList.remove(data);
@@ -244,31 +234,30 @@ public class MedianAttributeAggregator extends AttributeAggregator {
             return median;
         }
 
-
         public Object reset() {
-            this.arrayList = new ArrayList<Long>();
+            this.arrayList = new ArrayList<>();
             this.count = 0;
             this.median = 0.0;
             return median;
         }
 
         public Map<String, Object> currentState() {
-            Map<String, Object> state = new HashMap();
-            state.put("Median", Double.valueOf(this.median));
-            state.put("Count", Integer.valueOf(this.count));
+            Map<String, Object> state = new HashMap<>();
+            state.put("Median", this.median);
+            state.put("Count", this.count);
             return state;
         }
 
         public void restoreState(Map<String, Object> state) {
-            this.median = ((Double) state.get("Median")).doubleValue();
-            this.count = ((Integer) state.get("Count")).intValue();
+            this.median = (Double) state.get("Median");
+            this.count = (Integer) state.get("Count");
 
         }
     }
 
-    private class MedianAggregatorFloat extends MedianAttributeAggregator {
+    private static class MedianAggregatorFloat extends MedianAttributeAggregator {
 
-        private ArrayList<Float> arrayList = new ArrayList<Float>();
+        private ArrayList<Float> arrayList = new ArrayList<>();
         private int count = 0;
         private double median;
 
@@ -281,13 +270,11 @@ public class MedianAttributeAggregator extends AttributeAggregator {
 
         private double getMedian() {
             Collections.sort(this.arrayList);
-
             int midPointA = this.count / 2;
             if (this.count % 2 == 0) {
                 int midPointB = midPointA - 1;
                 return (this.arrayList.get(midPointA) + this.arrayList.get(midPointB)) / 2.0;
             }
-
             return this.arrayList.get(midPointA);
         }
 
@@ -300,29 +287,28 @@ public class MedianAttributeAggregator extends AttributeAggregator {
 
 
         public Object reset() {
-            this.arrayList = new ArrayList<Float>();
+            this.arrayList = new ArrayList<>();
             this.count = 0;
             this.median = 0.0;
             return this.median;
         }
 
         public Map<String, Object> currentState() {
-            Map<String, Object> state = new HashMap();
-            state.put("Median", Double.valueOf(this.median));
-            state.put("Count", Integer.valueOf(this.count));
+            Map<String, Object> state = new HashMap<>();
+            state.put("Median", this.median);
+            state.put("Count", this.count);
             return state;
         }
 
         public void restoreState(Map<String, Object> state) {
-            this.median = ((Double) state.get("Median")).doubleValue();
-            this.count = ((Integer) state.get("Count")).intValue();
-
+            this.median = (Double) state.get("Median");
+            this.count = (Integer) state.get("Count");
         }
     }
 
-    private class MedianAggregatorInt extends MedianAttributeAggregator {
+    private static class MedianAggregatorInt extends MedianAttributeAggregator {
 
-        private ArrayList<Integer> arrayList = new ArrayList<Integer>();
+        private ArrayList<Integer> arrayList = new ArrayList<>();
         private int count = 0;
         private double median;
 
@@ -353,29 +339,26 @@ public class MedianAttributeAggregator extends AttributeAggregator {
             return median;
         }
 
-
         public Object reset() {
-            this.arrayList = new ArrayList<Integer>();
+            this.arrayList = new ArrayList<>();
             this.count = 0;
             this.median = 0.0;
             return median;
         }
 
         public Map<String, Object> currentState() {
-            Map<String, Object> state = new HashMap();
-            state.put("Median", Double.valueOf(this.median));
-            state.put("Count", Integer.valueOf(this.count));
+            Map<String, Object> state = new HashMap<>();
+            state.put("Median", this.median);
+            state.put("Count", this.count);
             return state;
         }
 
         public void restoreState(Map<String, Object> state) {
-            this.median = ((Double) state.get("Median")).doubleValue();
-            this.count = ((Integer) state.get("Count")).intValue();
+            this.median = (Double) state.get("Median");
+            this.count = (Integer) state.get("Count");
 
         }
     }
-
-
 }
 
 
