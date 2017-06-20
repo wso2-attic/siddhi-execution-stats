@@ -17,22 +17,30 @@ package org.wso2.extension.siddhi.execution.stats;
 */
 
 
-import junit.framework.Assert;
 import org.apache.log4j.Logger;
-import org.wso2.siddhi.core.ExecutionPlanRuntime;
+import org.testng.AssertJUnit;
+import org.testng.annotations.Test;
+import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.stream.input.InputHandler;
 import org.wso2.siddhi.core.stream.output.StreamCallback;
 
+/**
+ * Test cases for the median extension.
+ */
 public class MedianAttributeAggregatorTestCase {
 
     private static final Logger log = Logger.getLogger(MedianAttributeAggregatorTestCase.class);
     private int count = 0;
 
-
-    @org.junit.Test
-    public void Test1() throws InterruptedException {
+    /**
+     * MedianAggregatorTestCase Double Sliding Length Window TestCase.
+     *
+     * @throws InterruptedException
+     */
+    @Test
+    public void test1() throws InterruptedException {
 
         log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -43,10 +51,10 @@ public class MedianAttributeAggregatorTestCase {
 
         String query = "@info(name = 'query1') " + "from inputStream#window.length(5) " +
                 "select stats:median(tt) as tt insert into filteredOutputStream";
-        ExecutionPlanRuntime executionPlanRuntime = siddhiManager.
-                createExecutionPlanRuntime(inStreamDefinition + query);
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.
+                createSiddhiAppRuntime(inStreamDefinition + query);
 
-        executionPlanRuntime.addCallback("filteredOutputStream", new StreamCallback() {
+        siddhiAppRuntime.addCallback("filteredOutputStream", new StreamCallback() {
             @Override
             public void receive(org.wso2.siddhi.core.event.Event[] events) {
 
@@ -55,34 +63,34 @@ public class MedianAttributeAggregatorTestCase {
                     count++;
                     switch (count) {
                         case 1:
-                            Assert.assertEquals(8.94775, ev.getData()[0]);
+                            AssertJUnit.assertEquals(8.94775, ev.getData()[0]);
                             break;
                         case 2:
-                            Assert.assertEquals(8.81493, ev.getData(0));
+                            AssertJUnit.assertEquals(8.81493, ev.getData(0));
                             break;
                         case 3:
-                            Assert.assertEquals(8.68211, ev.getData()[0]);
+                            AssertJUnit.assertEquals(8.68211, ev.getData()[0]);
                             break;
                         case 4:
-                            Assert.assertEquals(8.56327, ev.getData()[0]);
+                            AssertJUnit.assertEquals(8.56327, ev.getData()[0]);
                             break;
                         case 5:
-                            Assert.assertEquals(8.68211, ev.getData()[0]);
+                            AssertJUnit.assertEquals(8.68211, ev.getData()[0]);
                             break;
                         case 6:
-                            Assert.assertEquals(8.68211, ev.getData()[0]);
+                            AssertJUnit.assertEquals(8.68211, ev.getData()[0]);
                             break;
                         case 7:
-                            Assert.assertEquals(9.76563, ev.getData()[0]);
+                            AssertJUnit.assertEquals(9.76563, ev.getData()[0]);
                             break;
                         case 8:
-                            Assert.assertEquals(9.76563, ev.getData()[0]);
+                            AssertJUnit.assertEquals(9.76563, ev.getData()[0]);
                             break;
                         case 9:
-                            Assert.assertEquals(9.76563, ev.getData()[0]);
+                            AssertJUnit.assertEquals(9.76563, ev.getData()[0]);
                             break;
                         case 10:
-                            Assert.assertEquals(9.17144, ev.getData()[0]);
+                            AssertJUnit.assertEquals(9.17144, ev.getData()[0]);
                             break;
 
                     }
@@ -92,8 +100,8 @@ public class MedianAttributeAggregatorTestCase {
             }
         });
 
-        InputHandler inputHandler = executionPlanRuntime.getInputHandler("inputStream");
-        executionPlanRuntime.start();
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
+        siddhiAppRuntime.start();
         inputHandler.send(new Object[]{8.94775});
         inputHandler.send(new Object[]{8.68211});
         inputHandler.send(new Object[]{8.44443});
@@ -105,12 +113,16 @@ public class MedianAttributeAggregatorTestCase {
         inputHandler.send(new Object[]{8.19278});
         inputHandler.send(new Object[]{7.49374});
 
-
-        executionPlanRuntime.shutdown();
+        siddhiAppRuntime.shutdown();
     }
 
-    @org.junit.Test
-    public void Test2() throws InterruptedException {
+    /**
+     * MedianAggregatorTestCase Double Sliding Length Window TestCase.
+     *
+     * @throws InterruptedException
+     */
+    @Test
+    public void test2() throws InterruptedException {
 
         log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -121,10 +133,10 @@ public class MedianAttributeAggregatorTestCase {
 
         String query = "@info(name = 'query1') " + "from inputStream#window.lengthBatch(5) " +
                 "select stats:median(tt) as tt insert into filteredOutputStream";
-        ExecutionPlanRuntime executionPlanRuntime = siddhiManager.
-                createExecutionPlanRuntime(inStreamDefinition + query);
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.
+                createSiddhiAppRuntime(inStreamDefinition + query);
 
-        executionPlanRuntime.addCallback("filteredOutputStream", new StreamCallback() {
+        siddhiAppRuntime.addCallback("filteredOutputStream", new StreamCallback() {
             @Override
             public void receive(org.wso2.siddhi.core.event.Event[] events) {
 
@@ -133,18 +145,18 @@ public class MedianAttributeAggregatorTestCase {
                     count++;
                     switch (count) {
                         case 1:
-                            Assert.assertEquals(8.68211, ev.getData()[0]);
+                            AssertJUnit.assertEquals(8.68211, ev.getData()[0]);
                             break;
                         case 2:
-                            Assert.assertEquals(9.17144, ev.getData(0));
+                            AssertJUnit.assertEquals(9.17144, ev.getData(0));
                             break;
                     }
                 }
             }
         });
 
-        InputHandler inputHandler = executionPlanRuntime.getInputHandler("inputStream");
-        executionPlanRuntime.start();
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
+        siddhiAppRuntime.start();
         inputHandler.send(new Object[]{8.94775});
         inputHandler.send(new Object[]{8.68211});
         inputHandler.send(new Object[]{8.44443});
@@ -156,11 +168,16 @@ public class MedianAttributeAggregatorTestCase {
         inputHandler.send(new Object[]{8.19278});
         inputHandler.send(new Object[]{7.49374});
 
-        executionPlanRuntime.shutdown();
+        siddhiAppRuntime.shutdown();
     }
 
-    @org.junit.Test
-    public void Test3() throws InterruptedException {
+    /**
+     * MedianAggregatorTestCase Double Sliding Length Window TestCase.
+     *
+     * @throws InterruptedException
+     */
+    @Test
+    public void test3() throws InterruptedException {
 
         log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -171,10 +188,10 @@ public class MedianAttributeAggregatorTestCase {
 
         String query = "@info(name = 'query1') " + "from inputStream#window.lengthBatch(5) " +
                 "select stats:median(tt) as tt insert into filteredOutputStream";
-        ExecutionPlanRuntime executionPlanRuntime = siddhiManager.
-                createExecutionPlanRuntime(inStreamDefinition + query);
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.
+                createSiddhiAppRuntime(inStreamDefinition + query);
 
-        executionPlanRuntime.addCallback("filteredOutputStream", new StreamCallback() {
+        siddhiAppRuntime.addCallback("filteredOutputStream", new StreamCallback() {
             @Override
             public void receive(org.wso2.siddhi.core.event.Event[] events) {
 
@@ -182,18 +199,18 @@ public class MedianAttributeAggregatorTestCase {
                     count++;
                     switch (count) {
                         case 1:
-                            Assert.assertEquals(3.0, ev.getData()[0]);
+                            AssertJUnit.assertEquals(3.0, ev.getData()[0]);
                             break;
                         case 2:
-                            Assert.assertEquals(8.0, ev.getData(0));
+                            AssertJUnit.assertEquals(8.0, ev.getData(0));
                             break;
                     }
                 }
             }
         });
 
-        InputHandler inputHandler = executionPlanRuntime.getInputHandler("inputStream");
-        executionPlanRuntime.start();
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
+        siddhiAppRuntime.start();
         inputHandler.send(new Object[]{1});
         inputHandler.send(new Object[]{2});
         inputHandler.send(new Object[]{3});
@@ -205,12 +222,15 @@ public class MedianAttributeAggregatorTestCase {
         inputHandler.send(new Object[]{10});
         inputHandler.send(new Object[]{7});
 
-
-        executionPlanRuntime.shutdown();
+        siddhiAppRuntime.shutdown();
     }
 
-    @org.junit.Test
-    public void Test4() throws InterruptedException {
+    /**
+     * MedianAggregatorTestCase Double Sliding Length Window TestCase.
+     * @throws InterruptedException
+     */
+    @Test
+    public void test4() throws InterruptedException {
 
         log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -221,10 +241,10 @@ public class MedianAttributeAggregatorTestCase {
 
         String query = "@info(name = 'query1') " + "from inputStream#window.length(5) " +
                 "select stats:median(tt) as tt insert into filteredOutputStream";
-        ExecutionPlanRuntime executionPlanRuntime = siddhiManager.
-                createExecutionPlanRuntime(inStreamDefinition + query);
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.
+                createSiddhiAppRuntime(inStreamDefinition + query);
 
-        executionPlanRuntime.addCallback("filteredOutputStream", new StreamCallback() {
+        siddhiAppRuntime.addCallback("filteredOutputStream", new StreamCallback() {
             @Override
             public void receive(org.wso2.siddhi.core.event.Event[] events) {
 
@@ -232,34 +252,34 @@ public class MedianAttributeAggregatorTestCase {
                     count++;
                     switch (count) {
                         case 1:
-                            Assert.assertEquals(1.0, ev.getData(0));
+                            AssertJUnit.assertEquals(1.0, ev.getData(0));
                             break;
                         case 2:
-                            Assert.assertEquals(1.5, ev.getData(0));
+                            AssertJUnit.assertEquals(1.5, ev.getData(0));
                             break;
                         case 3:
-                            Assert.assertEquals(2.0, ev.getData(0));
+                            AssertJUnit.assertEquals(2.0, ev.getData(0));
                             break;
                         case 4:
-                            Assert.assertEquals(2.5, ev.getData(0));
+                            AssertJUnit.assertEquals(2.5, ev.getData(0));
                             break;
                         case 5:
-                            Assert.assertEquals(3.0, ev.getData(0));
+                            AssertJUnit.assertEquals(3.0, ev.getData(0));
                             break;
                         case 6:
-                            Assert.assertEquals(4.0, ev.getData(0));
+                            AssertJUnit.assertEquals(4.0, ev.getData(0));
                             break;
                         case 7:
-                            Assert.assertEquals(5.0, ev.getData(0));
+                            AssertJUnit.assertEquals(5.0, ev.getData(0));
                             break;
                         case 8:
-                            Assert.assertEquals(6.0, ev.getData(0));
+                            AssertJUnit.assertEquals(6.0, ev.getData(0));
                             break;
                         case 9:
-                            Assert.assertEquals(8.0, ev.getData(0));
+                            AssertJUnit.assertEquals(8.0, ev.getData(0));
                             break;
                         case 10:
-                            Assert.assertEquals(8.0, ev.getData(0));
+                            AssertJUnit.assertEquals(8.0, ev.getData(0));
                             break;
 
                     }
@@ -268,8 +288,8 @@ public class MedianAttributeAggregatorTestCase {
             }
         });
 
-        InputHandler inputHandler = executionPlanRuntime.getInputHandler("inputStream");
-        executionPlanRuntime.start();
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
+        siddhiAppRuntime.start();
         inputHandler.send(new Object[]{1});
         inputHandler.send(new Object[]{2});
         inputHandler.send(new Object[]{3});
@@ -281,8 +301,7 @@ public class MedianAttributeAggregatorTestCase {
         inputHandler.send(new Object[]{10});
         inputHandler.send(new Object[]{7});
 
-
-        executionPlanRuntime.shutdown();
+        siddhiAppRuntime.shutdown();
     }
 }
 

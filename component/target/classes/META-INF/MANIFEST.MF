@@ -1,0 +1,37 @@
+Manifest-Version: 1.0
+Bundle-Description: WSO2 is an open source application development sof
+ tware company focused on providing service-orientedarchitecture solut
+ ions for professional developers.
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-SymbolicName: siddhi-execution-stats
+Built-By: yasara
+Bundle-ManifestVersion: 2
+Bnd-LastModified: 1497967139675
+Bundle-Copyright: WSO2 Inc
+Bundle-DocURL: https://docs.wso2.com
+Bundle-Vendor: WSO2 Inc
+Import-Package: org.wso2.siddhi.annotation;version="[4.0,5)";resolutio
+ n:=optional,org.wso2.siddhi.annotation.util;version="[4.0,5)";resolut
+ ion:=optional,org.wso2.siddhi.core.config;version="[4.0,5)";resolutio
+ n:=optional,org.wso2.siddhi.core.exception;version="[4.0,5)";resoluti
+ on:=optional,org.wso2.siddhi.core.executor;version="[4.0,5)";resoluti
+ on:=optional,org.wso2.siddhi.core.query.selector.attribute.aggregator
+ ;version="[4.0,5)";resolution:=optional,org.wso2.siddhi.core.util.con
+ fig;version="[4.0,5)";resolution:=optional,org.wso2.siddhi.query.api.
+ definition;version="[4.0,5)";resolution:=optional
+Bundle-Developers: WSO2 Inc
+Tool: Bnd-1.43.0
+Export-Package: org.wso2.extension.siddhi.execution.stats;uses:="org.w
+ so2.siddhi.query.api.definition,org.wso2.siddhi.core.executor,org.wso
+ 2.siddhi.core.util.config,org.wso2.siddhi.annotation.util,org.wso2.si
+ ddhi.core.exception,org.wso2.siddhi.annotation,org.wso2.siddhi.core.q
+ uery.selector.attribute.aggregator,org.wso2.siddhi.core.config";versi
+ on="4.0.0.SNAPSHOT"
+SCM-Revision: 61c06ce5c23bed524d7e051885c8aa74b0b53293
+Bundle-Name: siddhi-execution-stats
+Bundle-Version: 4.0.0.SNAPSHOT
+Bundle-ClassPath: .
+Bundle-Contributors: WSO2 Inc
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_121
+
