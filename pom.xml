@@ -34,7 +34,7 @@
     <groupId>org.wso2.extension.siddhi.execution.stats</groupId>
     <artifactId>siddhi-execution-stats-parent</artifactId>
     <name>WSO2 Siddhi Execution Extension - Stats Aggregator Pom</name>
-    <version>4.0.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <profiles>
         <profile>
@@ -49,7 +49,7 @@
     </profiles>
 
     <properties>
-        <siddhi.version>4.0.0-M7-SNAPSHOT</siddhi.version>
+        <siddhi.version>4.0.0-M7</siddhi.version>
         <log4j.version>1.2.17.wso2v1</log4j.version>
         <testng.version>6.11</testng.version>
     </properties>
