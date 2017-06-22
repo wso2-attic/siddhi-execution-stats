@@ -62,7 +62,7 @@ import java.util.Map;
                 "As calculation of median is done for each event arrival and expiry, " +
                 "it is not recommended to use this extension for large window sizes. ",
         parameters = {
-                @Parameter(name = "arg",
+                @Parameter(name = "data",
                         description = "The value that needs to be aggregated for the median.",
                         type = {DataType.INT, DataType.LONG, DataType.DOUBLE, DataType.FLOAT})
 
