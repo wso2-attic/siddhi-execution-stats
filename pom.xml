@@ -49,15 +49,15 @@
     </profiles>
 
     <properties>
-        <siddhi.version>4.0.0-M7</siddhi.version>
+        <siddhi.version>4.0.0-M9</siddhi.version>
         <log4j.version>1.2.17.wso2v1</log4j.version>
         <testng.version>6.11</testng.version>
     </properties>
 
     <scm>
-        <connection>scm:git:https://github.com/wso2-extensions/siddhi-execution-median.git</connection>
-        <url>https://github.com/wso2-extensions/siddhi-execution-median.git</url>
-        <developerConnection>scm:git:https://github.com/wso2-extensions/siddhi-execution-median.git
+        <connection>scm:git:https://github.com/wso2-extensions/siddhi-execution-stats.git</connection>
+        <url>https://github.com/wso2-extensions/siddhi-execution-stats.git</url>
+        <developerConnection>scm:git:https://github.com/wso2-extensions/siddhi-execution-stats.git
         </developerConnection>
         <tag>HEAD</tag>
     </scm>
