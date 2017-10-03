@@ -133,6 +133,10 @@ public class MedianAttributeAggregator extends AttributeAggregator {
                 Arrays.deepToString(data));
     }
 
+    @Override public boolean canDestroy() {
+        return this.medianAggregator.canDestroy();
+    }
+
     public Object reset() {
         return this.medianAggregator.reset();
     }
@@ -190,6 +194,10 @@ public class MedianAttributeAggregator extends AttributeAggregator {
             return median;
         }
 
+        public boolean canDestroy() {
+            return arrayList.size() == 0 && count == 0 && median == 0.0;
+        }
+
         public Map<String, Object> currentState() {
             Map<String, Object> state = new HashMap<>();
             state.put("Median", this.median);
@@ -239,6 +247,10 @@ public class MedianAttributeAggregator extends AttributeAggregator {
             this.count = 0;
             this.median = 0.0;
             return median;
+        }
+
+        public boolean canDestroy() {
+            return arrayList.size() == 0 && count == 0 && median == 0.0;
         }
 
         public Map<String, Object> currentState() {
@@ -293,6 +305,10 @@ public class MedianAttributeAggregator extends AttributeAggregator {
             return this.median;
         }
 
+        public boolean canDestroy() {
+            return arrayList.size() == 0 && count == 0 && median == 0.0;
+        }
+
         public Map<String, Object> currentState() {
             Map<String, Object> state = new HashMap<>();
             state.put("Median", this.median);
@@ -344,6 +360,10 @@ public class MedianAttributeAggregator extends AttributeAggregator {
             this.count = 0;
             this.median = 0.0;
             return median;
+        }
+
+        public boolean canDestroy() {
+            return arrayList.size() == 0 && count == 0 && median == 0.0;
         }
 
         public Map<String, Object> currentState() {
