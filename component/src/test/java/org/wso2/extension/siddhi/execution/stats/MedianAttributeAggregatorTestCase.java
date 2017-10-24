@@ -46,7 +46,6 @@ public class MedianAttributeAggregatorTestCase {
         log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
         SiddhiManager siddhiManager = new SiddhiManager();
 
-
         String inStreamDefinition = "define stream inputStream (tt double); " +
                 "define stream outputStream (tt double);";
 
@@ -58,8 +57,6 @@ public class MedianAttributeAggregatorTestCase {
         siddhiAppRuntime.addCallback("filteredOutputStream", new StreamCallback() {
             @Override
             public void receive(org.wso2.siddhi.core.event.Event[] events) {
-
-                // EventPrinter.print(events);
                 for (Event ev : events) {
                     count++;
                     switch (count) {
@@ -128,7 +125,6 @@ public class MedianAttributeAggregatorTestCase {
         log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
         SiddhiManager siddhiManager = new SiddhiManager();
 
-
         String inStreamDefinition = "define stream inputStream (tt double); " +
                 "define stream outputStream (tt double);";
 
@@ -140,8 +136,6 @@ public class MedianAttributeAggregatorTestCase {
         siddhiAppRuntime.addCallback("filteredOutputStream", new StreamCallback() {
             @Override
             public void receive(org.wso2.siddhi.core.event.Event[] events) {
-
-                // EventPrinter.print(events);
                 for (Event ev : events) {
                     count++;
                     switch (count) {
@@ -182,7 +176,6 @@ public class MedianAttributeAggregatorTestCase {
 
         log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
         SiddhiManager siddhiManager = new SiddhiManager();
-
 
         String inStreamDefinition = "define stream inputStream (tt int); " +
                 "define stream outputStream (tt double);";
@@ -312,7 +305,6 @@ public class MedianAttributeAggregatorTestCase {
         log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
         SiddhiManager siddhiManager = new SiddhiManager();
 
-
         String inStreamDefinition = "define stream inputStream (tt float); " +
                 "define stream outputStream (tt double);";
 
@@ -324,8 +316,6 @@ public class MedianAttributeAggregatorTestCase {
         siddhiAppRuntime.addCallback("filteredOutputStream", new StreamCallback() {
             @Override
             public void receive(org.wso2.siddhi.core.event.Event[] events) {
-
-                // EventPrinter.print(events);
                 for (Event ev : events) {
                     count++;
                     switch (count) {
@@ -386,7 +376,6 @@ public class MedianAttributeAggregatorTestCase {
         log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
         SiddhiManager siddhiManager = new SiddhiManager();
 
-
         String inStreamDefinition = "define stream inputStream (tt float); " +
                 "define stream outputStream (tt double);";
 
@@ -446,8 +435,6 @@ public class MedianAttributeAggregatorTestCase {
         siddhiAppRuntime.addCallback("filteredOutputStream", new StreamCallback() {
             @Override
             public void receive(org.wso2.siddhi.core.event.Event[] events) {
-
-                // EventPrinter.print(events);
                 for (Event ev : events) {
                     count++;
                     switch (count) {

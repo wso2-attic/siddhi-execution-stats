@@ -203,8 +203,6 @@ public class MedianAttributeAggregatorPersistenceTestCase {
         siddhiAppRuntime.addCallback("filteredOutputStream", new StreamCallback() {
             @Override
             public void receive(org.wso2.siddhi.core.event.Event[] events) {
-
-                // EventPrinter.print(events);
                 for (Event ev : events) {
                     count++;
                     switch (count) {
@@ -281,8 +279,6 @@ public class MedianAttributeAggregatorPersistenceTestCase {
         siddhiAppRuntime.addCallback("filteredOutputStream", new StreamCallback() {
             @Override
             public void receive(org.wso2.siddhi.core.event.Event[] events) {
-
-                // EventPrinter.print(events);
                 for (Event ev : events) {
                     count++;
                     switch (count) {
