@@ -18,6 +18,7 @@ limitations under the License.
     <test name="siddi-execution-stats-tests" preserve-order="true" parallel="false">
         <classes>
             <class name="org.wso2.extension.siddhi.execution.stats.MedianAttributeAggregatorTestCase"/>
+            <class name="org.wso2.extension.siddhi.execution.stats.MedianAttributeAggregatorPersistenceTestCase"/>
         </classes>
     </test>
 </suite>
