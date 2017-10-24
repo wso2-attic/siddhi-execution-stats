@@ -1,5 +1,3 @@
-package org.wso2.extension.siddhi.execution.stats;
-
 /*
 * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 *
@@ -16,6 +14,7 @@ package org.wso2.extension.siddhi.execution.stats;
 * limitations under the License.
 */
 
+package org.wso2.extension.siddhi.execution.stats;
 
 import org.apache.log4j.Logger;
 import org.testng.AssertJUnit;
@@ -23,29 +22,21 @@ import org.testng.annotations.Test;
 import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.event.Event;
-import org.wso2.siddhi.core.exception.SiddhiAppCreationException;
 import org.wso2.siddhi.core.stream.input.InputHandler;
 import org.wso2.siddhi.core.stream.output.StreamCallback;
+import org.wso2.siddhi.core.util.persistence.InMemoryPersistenceStore;
+import org.wso2.siddhi.core.util.persistence.PersistenceStore;
 
-/**
- * Test cases for the median extension.
- */
-public class MedianAttributeAggregatorTestCase {
-
-    private static final Logger log = Logger.getLogger(MedianAttributeAggregatorTestCase.class);
+public class MedianAttributeAggregatorPersistenceTestCase {
+    private static final Logger log = Logger.getLogger(MedianAttributeAggregatorPersistenceTestCase.class);
     private int count = 0;
 
-    /**
-     * MedianAggregatorTestCase Double Sliding Length Window TestCase.
-     *
-     * @throws InterruptedException
-     */
     @Test
-    public void test1() throws InterruptedException {
-
+    public void testPersistence1() throws InterruptedException {
         log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
+        PersistenceStore persistenceStore = new InMemoryPersistenceStore();
         SiddhiManager siddhiManager = new SiddhiManager();
-
+        siddhiManager.setPersistenceStore(persistenceStore);
 
         String inStreamDefinition = "define stream inputStream (tt double); " +
                 "define stream outputStream (tt double);";
@@ -59,7 +50,6 @@ public class MedianAttributeAggregatorTestCase {
             @Override
             public void receive(org.wso2.siddhi.core.event.Event[] events) {
 
-                // EventPrinter.print(events);
                 for (Event ev : events) {
                     count++;
                     switch (count) {
@@ -93,64 +83,6 @@ public class MedianAttributeAggregatorTestCase {
                         case 10:
                             AssertJUnit.assertEquals(9.17144, ev.getData()[0]);
                             break;
-
-                    }
-
-
-                }
-            }
-        });
-
-        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
-        siddhiAppRuntime.start();
-        inputHandler.send(new Object[]{8.94775});
-        inputHandler.send(new Object[]{8.68211});
-        inputHandler.send(new Object[]{8.44443});
-        inputHandler.send(new Object[]{8.23472});
-        inputHandler.send(new Object[]{10.9959});
-        inputHandler.send(new Object[]{10.3738});
-        inputHandler.send(new Object[]{9.76563});
-        inputHandler.send(new Object[]{9.17144});
-        inputHandler.send(new Object[]{8.19278});
-        inputHandler.send(new Object[]{7.49374});
-
-        siddhiAppRuntime.shutdown();
-    }
-
-    /**
-     * MedianAggregatorTestCase Double Sliding Length Window TestCase.
-     *
-     * @throws InterruptedException
-     */
-    @Test
-    public void test2() throws InterruptedException {
-
-        log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
-        SiddhiManager siddhiManager = new SiddhiManager();
-
-
-        String inStreamDefinition = "define stream inputStream (tt double); " +
-                "define stream outputStream (tt double);";
-
-        String query = "@info(name = 'query1') " + "from inputStream#window.lengthBatch(5) " +
-                "select stats:median(tt) as tt insert into filteredOutputStream";
-        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.
-                createSiddhiAppRuntime(inStreamDefinition + query);
-
-        siddhiAppRuntime.addCallback("filteredOutputStream", new StreamCallback() {
-            @Override
-            public void receive(org.wso2.siddhi.core.event.Event[] events) {
-
-                // EventPrinter.print(events);
-                for (Event ev : events) {
-                    count++;
-                    switch (count) {
-                        case 1:
-                            AssertJUnit.assertEquals(8.68211, ev.getData()[0]);
-                            break;
-                        case 2:
-                            AssertJUnit.assertEquals(9.17144, ev.getData(0));
-                            break;
                     }
                 }
             }
@@ -163,80 +95,25 @@ public class MedianAttributeAggregatorTestCase {
         inputHandler.send(new Object[]{8.44443});
         inputHandler.send(new Object[]{8.23472});
         inputHandler.send(new Object[]{10.9959});
+        siddhiAppRuntime.persist();
+        siddhiAppRuntime.shutdown();
+        inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
+        siddhiAppRuntime.start();
+        siddhiAppRuntime.restoreLastRevision();
         inputHandler.send(new Object[]{10.3738});
         inputHandler.send(new Object[]{9.76563});
         inputHandler.send(new Object[]{9.17144});
         inputHandler.send(new Object[]{8.19278});
         inputHandler.send(new Object[]{7.49374});
-
         siddhiAppRuntime.shutdown();
     }
 
-    /**
-     * MedianAggregatorTestCase Double Sliding Length Window TestCase.
-     *
-     * @throws InterruptedException
-     */
     @Test
-    public void test3() throws InterruptedException {
-
+    public void testPersistence2() throws InterruptedException {
         log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
+        PersistenceStore persistenceStore = new InMemoryPersistenceStore();
         SiddhiManager siddhiManager = new SiddhiManager();
-
-
-        String inStreamDefinition = "define stream inputStream (tt int); " +
-                "define stream outputStream (tt double);";
-
-        String query = "@info(name = 'query1') " + "from inputStream#window.lengthBatch(5) " +
-                "select stats:median(tt) as tt insert into filteredOutputStream";
-        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.
-                createSiddhiAppRuntime(inStreamDefinition + query);
-
-        siddhiAppRuntime.addCallback("filteredOutputStream", new StreamCallback() {
-            @Override
-            public void receive(org.wso2.siddhi.core.event.Event[] events) {
-
-                for (Event ev : events) {
-                    count++;
-                    switch (count) {
-                        case 1:
-                            AssertJUnit.assertEquals(3.0, ev.getData()[0]);
-                            break;
-                        case 2:
-                            AssertJUnit.assertEquals(8.0, ev.getData(0));
-                            break;
-                    }
-                }
-            }
-        });
-
-        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
-        siddhiAppRuntime.start();
-        inputHandler.send(new Object[]{1});
-        inputHandler.send(new Object[]{2});
-        inputHandler.send(new Object[]{3});
-        inputHandler.send(new Object[]{4});
-        inputHandler.send(new Object[]{5});
-        inputHandler.send(new Object[]{6});
-        inputHandler.send(new Object[]{8});
-        inputHandler.send(new Object[]{9});
-        inputHandler.send(new Object[]{10});
-        inputHandler.send(new Object[]{7});
-
-        siddhiAppRuntime.shutdown();
-    }
-
-    /**
-     * MedianAggregatorTestCase Double Sliding Length Window TestCase.
-     *
-     * @throws InterruptedException
-     */
-    @Test
-    public void test4() throws InterruptedException {
-
-        log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
-        SiddhiManager siddhiManager = new SiddhiManager();
-
+        siddhiManager.setPersistenceStore(persistenceStore);
 
         String inStreamDefinition = "define stream inputStream (tt int); " +
                 "define stream outputStream (tt double);";
@@ -283,9 +160,7 @@ public class MedianAttributeAggregatorTestCase {
                         case 10:
                             AssertJUnit.assertEquals(8.0, ev.getData(0));
                             break;
-
                     }
-
                 }
             }
         });
@@ -297,21 +172,25 @@ public class MedianAttributeAggregatorTestCase {
         inputHandler.send(new Object[]{3});
         inputHandler.send(new Object[]{4});
         inputHandler.send(new Object[]{5});
+        siddhiAppRuntime.persist();
+        siddhiAppRuntime.shutdown();
+        inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
+        siddhiAppRuntime.start();
+        siddhiAppRuntime.restoreLastRevision();
         inputHandler.send(new Object[]{6});
         inputHandler.send(new Object[]{8});
         inputHandler.send(new Object[]{9});
         inputHandler.send(new Object[]{10});
         inputHandler.send(new Object[]{7});
-
         siddhiAppRuntime.shutdown();
     }
 
     @Test
-    public void test5() throws InterruptedException {
-
+    public void testPersistence3() throws InterruptedException {
         log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
+        PersistenceStore persistenceStore = new InMemoryPersistenceStore();
         SiddhiManager siddhiManager = new SiddhiManager();
-
+        siddhiManager.setPersistenceStore(persistenceStore);
 
         String inStreamDefinition = "define stream inputStream (tt float); " +
                 "define stream outputStream (tt double);";
@@ -371,69 +250,25 @@ public class MedianAttributeAggregatorTestCase {
         inputHandler.send(new Object[]{3.5f});
         inputHandler.send(new Object[]{4.5f});
         inputHandler.send(new Object[]{5.5f});
-        inputHandler.send(new Object[]{6.5f});
-        inputHandler.send(new Object[]{10.5f});
-        inputHandler.send(new Object[]{9.5f});
-        inputHandler.send(new Object[]{8.5f});
-        inputHandler.send(new Object[]{7.5f});
-
+        siddhiAppRuntime.persist();
         siddhiAppRuntime.shutdown();
-    }
-
-    @Test
-    public void test6() throws InterruptedException {
-
-        log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
-        SiddhiManager siddhiManager = new SiddhiManager();
-
-
-        String inStreamDefinition = "define stream inputStream (tt float); " +
-                "define stream outputStream (tt double);";
-
-        String query = "@info(name = 'query1') " + "from inputStream#window.lengthBatch(5) " +
-                "select stats:median(tt) as tt insert into filteredOutputStream";
-        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.
-                createSiddhiAppRuntime(inStreamDefinition + query);
-
-        siddhiAppRuntime.addCallback("filteredOutputStream", new StreamCallback() {
-            @Override
-            public void receive(org.wso2.siddhi.core.event.Event[] events) {
-                for (Event ev : events) {
-                    count++;
-                    switch (count) {
-                        case 1:
-                            AssertJUnit.assertEquals(3.5, ev.getData()[0]);
-                            break;
-                        case 2:
-                            AssertJUnit.assertEquals(8.5, ev.getData(0));
-                            break;
-                    }
-                }
-            }
-        });
-
-        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
+        inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[]{1.5f});
-        inputHandler.send(new Object[]{2.5f});
-        inputHandler.send(new Object[]{3.5f});
-        inputHandler.send(new Object[]{4.5f});
-        inputHandler.send(new Object[]{5.5f});
+        siddhiAppRuntime.restoreLastRevision();
         inputHandler.send(new Object[]{6.5f});
         inputHandler.send(new Object[]{10.5f});
         inputHandler.send(new Object[]{9.5f});
         inputHandler.send(new Object[]{8.5f});
         inputHandler.send(new Object[]{7.5f});
-
         siddhiAppRuntime.shutdown();
     }
 
     @Test
-    public void test7() throws InterruptedException {
-
+    public void testPersistence4() throws InterruptedException {
         log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
+        PersistenceStore persistenceStore = new InMemoryPersistenceStore();
         SiddhiManager siddhiManager = new SiddhiManager();
-
+        siddhiManager.setPersistenceStore(persistenceStore);
 
         String inStreamDefinition = "define stream inputStream (tt long); " +
                 "define stream outputStream (tt double);";
@@ -493,86 +328,16 @@ public class MedianAttributeAggregatorTestCase {
         inputHandler.send(new Object[]{3L});
         inputHandler.send(new Object[]{4L});
         inputHandler.send(new Object[]{5L});
-        inputHandler.send(new Object[]{10L});
-        inputHandler.send(new Object[]{9L});
-        inputHandler.send(new Object[]{6L});
-        inputHandler.send(new Object[]{8L});
-        inputHandler.send(new Object[]{7L});
+        siddhiAppRuntime.persist();
         siddhiAppRuntime.shutdown();
-    }
-
-    @Test
-    public void test8() throws InterruptedException {
-
-        log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
-        SiddhiManager siddhiManager = new SiddhiManager();
-
-
-        String inStreamDefinition = "define stream inputStream (tt long); " +
-                "define stream outputStream (tt double);";
-
-        String query = "@info(name = 'query1') " + "from inputStream#window.lengthBatch(5) " +
-                "select stats:median(tt) as tt insert into filteredOutputStream";
-        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.
-                createSiddhiAppRuntime(inStreamDefinition + query);
-
-        siddhiAppRuntime.addCallback("filteredOutputStream", new StreamCallback() {
-            @Override
-            public void receive(org.wso2.siddhi.core.event.Event[] events) {
-
-                for (Event ev : events) {
-                    count++;
-                    switch (count) {
-                        case 1:
-                            AssertJUnit.assertEquals(3.0, ev.getData()[0]);
-                            break;
-                        case 2:
-                            AssertJUnit.assertEquals(8.0, ev.getData(0));
-                            break;
-                    }
-                }
-            }
-        });
-
-        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
+        inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[]{1L});
-        inputHandler.send(new Object[]{2L});
-        inputHandler.send(new Object[]{3L});
-        inputHandler.send(new Object[]{4L});
-        inputHandler.send(new Object[]{5L});
+        siddhiAppRuntime.restoreLastRevision();
         inputHandler.send(new Object[]{10L});
         inputHandler.send(new Object[]{9L});
         inputHandler.send(new Object[]{6L});
         inputHandler.send(new Object[]{8L});
         inputHandler.send(new Object[]{7L});
         siddhiAppRuntime.shutdown();
-    }
-
-    @Test(expectedExceptions = SiddhiAppCreationException.class)
-    public void test9() throws InterruptedException {
-        log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
-        SiddhiManager siddhiManager = new SiddhiManager();
-
-        String inStreamDefinition = "define stream inputStream (tt long); " +
-                "define stream outputStream (tt double);";
-
-        String query = "@info(name = 'query1') " + "from inputStream#window.length(5) " +
-                "select stats:median() as tt insert into filteredOutputStream";
-        siddhiManager.createSiddhiAppRuntime(inStreamDefinition + query);
-    }
-
-    @Test(expectedExceptions = SiddhiAppCreationException.class)
-    public void test10() throws InterruptedException {
-        log.info("MedianAggregatorTestCase Double Sliding Length Window TestCase");
-        SiddhiManager siddhiManager = new SiddhiManager();
-
-        String inStreamDefinition = "define stream inputStream (tt String); " +
-                "define stream outputStream (tt double);";
-
-        String query = "@info(name = 'query1') " + "from inputStream#window.length(5) " +
-                "select stats:median(tt) as tt insert into filteredOutputStream";
-        siddhiManager.createSiddhiAppRuntime(inStreamDefinition + query);
     }
 }
-
