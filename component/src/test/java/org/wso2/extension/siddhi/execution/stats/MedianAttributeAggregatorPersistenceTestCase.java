@@ -22,6 +22,7 @@ import org.testng.annotations.Test;
 import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.event.Event;
+import org.wso2.siddhi.core.exception.CannotRestoreSiddhiAppStateException;
 import org.wso2.siddhi.core.stream.input.InputHandler;
 import org.wso2.siddhi.core.stream.output.StreamCallback;
 import org.wso2.siddhi.core.util.persistence.InMemoryPersistenceStore;
@@ -98,7 +99,11 @@ public class MedianAttributeAggregatorPersistenceTestCase {
         siddhiAppRuntime.shutdown();
         inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        siddhiAppRuntime.restoreLastRevision();
+        try {
+            siddhiAppRuntime.restoreLastRevision();
+        } catch (CannotRestoreSiddhiAppStateException e) {
+            log.error(e.getMessage(), e);
+        }
         inputHandler.send(new Object[]{10.3738});
         inputHandler.send(new Object[]{9.76563});
         inputHandler.send(new Object[]{9.17144});
@@ -174,7 +179,11 @@ public class MedianAttributeAggregatorPersistenceTestCase {
         siddhiAppRuntime.shutdown();
         inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        siddhiAppRuntime.restoreLastRevision();
+        try {
+            siddhiAppRuntime.restoreLastRevision();
+        } catch (CannotRestoreSiddhiAppStateException e) {
+            log.error(e.getMessage(), e);
+        }
         inputHandler.send(new Object[]{6});
         inputHandler.send(new Object[]{8});
         inputHandler.send(new Object[]{9});
@@ -250,7 +259,11 @@ public class MedianAttributeAggregatorPersistenceTestCase {
         siddhiAppRuntime.shutdown();
         inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        siddhiAppRuntime.restoreLastRevision();
+        try {
+            siddhiAppRuntime.restoreLastRevision();
+        } catch (CannotRestoreSiddhiAppStateException e) {
+            log.error(e.getMessage(), e);
+        }
         inputHandler.send(new Object[]{6.5f});
         inputHandler.send(new Object[]{10.5f});
         inputHandler.send(new Object[]{9.5f});
@@ -326,7 +339,11 @@ public class MedianAttributeAggregatorPersistenceTestCase {
         siddhiAppRuntime.shutdown();
         inputHandler = siddhiAppRuntime.getInputHandler("inputStream");
         siddhiAppRuntime.start();
-        siddhiAppRuntime.restoreLastRevision();
+        try {
+            siddhiAppRuntime.restoreLastRevision();
+        } catch (CannotRestoreSiddhiAppStateException e) {
+            log.error(e.getMessage(), e);
+        }
         inputHandler.send(new Object[]{10L});
         inputHandler.send(new Object[]{9L});
         inputHandler.send(new Object[]{6L});
