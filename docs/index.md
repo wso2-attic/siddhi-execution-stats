@@ -12,7 +12,7 @@ Find some useful links below:
 
 ## Latest API Docs 
 
-Latest API Docs is <a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-stats/api/1.0.10">1.0.10</a>.
+Latest API Docs is <a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-stats/api/1.0.11">1.0.11</a>.
 
 ## How to use 
 
@@ -46,7 +46,7 @@ Latest API Docs is <a target="_blank" href="https://wso2-extensions.github.io/si
 
 ## Features
 
-* <a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-stats/api/1.0.10/#median-aggregate-function">median</a> *(<a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#aggregate-function">(Aggregate Function)</a>)*<br><div style="padding-left: 1em;"><p>This extension returns the median of aggregated events.<br>&nbsp;As calculation of median is done for each event arrival and expiry, it is not recommended to use this extension for large window sizes. </p></div>
+* <a target="_blank" href="https://wso2-extensions.github.io/siddhi-execution-stats/api/1.0.11/#median-aggregate-function">median</a> *<a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#aggregate-function">(Aggregate Function)</a>*<br><div style="padding-left: 1em;"><p>This extension returns the median of aggregated events.<br>&nbsp;As calculation of median is done for each event arrival and expiry, it is not recommended to use this extension for large window sizes. </p></div>
 
 ## How to Contribute
  
