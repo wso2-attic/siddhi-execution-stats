@@ -59,23 +59,23 @@ import java.util.Map;
         namespace = "stats",
         description = "This extension returns the median of aggregated events." +
                 "\n " +
-                "As calculation of median is done for each event arrival and expiry, " +
-                "it is not recommended to use this extension for large window sizes. ",
+                "As the calculation of the median is performed with the arrival and expiry of each event, " +
+                "it is not recommended to use this extension for large window sizes.",
         parameters = {
                 @Parameter(name = "data",
-                        description = "The value that needs to be aggregated for the median.",
+                        description = "The value that needs to be aggregated in order to obtain its median.",
                         type = {DataType.INT, DataType.LONG, DataType.DOUBLE, DataType.FLOAT})
-
         },
         returnAttributes = @ReturnAttribute(
-                description = "Returns double for all data types. ie int, long, double and float",
+                description = "Returns the median as a 'double' value for all data " +
+                        "types, i.e., for 'int', 'long', 'double' and 'float'.",
                 type = {DataType.DOUBLE}),
         examples = @Example(
-                syntax = "from inputStream#window.length(5)" +
+                syntax = "from InputStream#window.length(5)" +
                         "\nselect stats:median(value) as medianOfValues" +
-                        "\ninsert into outputStream;",
-                description = "This will returns the median of aggregated values as a double " +
-                        "value for each event arrival and expiry of sliding window length 5."
+                        "\ninsert into OutputStream;",
+                description = "This returns the median of the aggregated values as a 'double' " +
+                        "value with the arrival and expiry of each event within the sliding window length of five."
         )
 )
 public class MedianAttributeAggregator extends AttributeAggregator {
