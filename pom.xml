@@ -32,7 +32,7 @@
     <groupId>org.wso2.extension.siddhi.execution.stats</groupId>
     <artifactId>siddhi-execution-stats-parent</artifactId>
     <name>WSO2 Siddhi Execution Extension - Stats Aggregator Pom</name>
-    <version>1.0.16-SNAPSHOT</version>
+    <version>1.0.16</version>
 
     <profiles>
         <profile>
@@ -60,7 +60,7 @@
         <url>https://github.com/wso2-extensions/siddhi-execution-stats.git</url>
         <developerConnection>scm:git:https://github.com/wso2-extensions/siddhi-execution-stats.git
         </developerConnection>
-        <tag>HEAD</tag>
+        <tag>v1.0.16</tag>
     </scm>
 
     <dependencyManagement>
