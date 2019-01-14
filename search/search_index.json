@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/", 
-            "text": "siddhi-execution-stats\n\n\nThe \nsiddhi-execution-stats extension\n is an extension to \nSiddhi\n that provides statistical functions for aggregated events. Currently this contains median \nfunction which calculate the median of aggregated events. Calculation of median is done for  each event arrival and expiry, it is not recommended to use this extension for large window sizes.\n\n\nFind some useful links below:\n\n\n\n\nSource code\n\n\nReleases\n\n\nIssue tracker\n\n\n\n\nLatest API Docs\n\n\nLatest API Docs is \n1.0.15\n.\n\n\nHow to use\n\n\nUsing the extension in \nWSO2 Stream Processor\n\n\n\n\n\n\nYou can use this extension in the latest \nWSO2 Stream Processor\n that is a part of \nWSO2 Analytics\n offering, with editor, debugger and simulation support. \n\n\n\n\n\n\nThis extension is shipped by default with WSO2 Stream Processor, if you wish to use an alternative version of this extension you can replace the component \njar\n that can be found in the \nSTREAM_PROCESSOR_HOME\n/lib\n directory.\n\n\n\n\n\n\nUsing the extension as a \njava library\n\n\n\n\nThis extension can be added as a maven dependency along with other Siddhi dependencies to your project.\n\n\n\n\n     \ndependency\n\n        \ngroupId\norg.wso2.extension.siddhi.execution.stats\n/groupId\n\n        \nartifactId\nsiddhi-execution-stats\n/artifactId\n\n        \nversion\nx.x.x\n/version\n\n     \n/dependency\n\n\n\n\n\n\nJenkins Build Status\n\n\n\n\n\n\n\n\n\n\nBranch\n\n\nBuild Status\n\n\n\n\n\n\n\n\n\n\nmaster\n\n\n\n\n\n\n\n\n\n\n\n\nFeatures\n\n\n\n\nmedian\n \n(Aggregate Function)\nThis extension returns the median of aggregated events.\nAs calculation of median is done for each event arrival and expiry, it is not recommended to use this extension for large window sizes. \n\n\n\n\nHow to Contribute\n\n\n\n\n\n\nPlease report issues at \nGitHub Issue Tracker\n.\n\n\n\n\n\n\nSend your contributions as pull requests to \nmaster branch\n. \n\n\n\n\n\n\nContact us\n\n\n\n\n\n\nPost your questions with the \n\"Siddhi\"\n tag in \nStackoverflow\n. \n\n\n\n\n\n\nSiddhi developers can be contacted via the mailing lists:\n\n\nDevelopers List   : \ndev@wso2.org\n\n\nArchitecture List : \narchitecture@wso2.org\n\n\n\n\n\n\nSupport\n\n\n\n\n\n\nWe are committed to ensuring support for this extension in production. Our stats approach ensures that all support leverages our open development methodology and is provided by the very same engineers who build the technology. \n\n\n\n\n\n\nFor more details and to take advantage of this stats opportunity contact us via \nhttp://wso2.com/support/\n.", 
+            "text": "siddhi-execution-stats\n\n\nThe \nsiddhi-execution-stats extension\n is an extension to \nSiddhi\n that provides statistical functions for aggregated events. Currently this contains median \nfunction which calculate the median of aggregated events. Calculation of median is done for  each event arrival and expiry, it is not recommended to use this extension for large window sizes.\n\n\nFind some useful links below:\n\n\n\n\nSource code\n\n\nReleases\n\n\nIssue tracker\n\n\n\n\nLatest API Docs\n\n\nLatest API Docs is \n1.0.16\n.\n\n\nHow to use\n\n\nUsing the extension in \nWSO2 Stream Processor\n\n\n\n\n\n\nYou can use this extension in the latest \nWSO2 Stream Processor\n that is a part of \nWSO2 Analytics\n offering, with editor, debugger and simulation support. \n\n\n\n\n\n\nThis extension is shipped by default with WSO2 Stream Processor, if you wish to use an alternative version of this extension you can replace the component \njar\n that can be found in the \nSTREAM_PROCESSOR_HOME\n/lib\n directory.\n\n\n\n\n\n\nUsing the extension as a \njava library\n\n\n\n\nThis extension can be added as a maven dependency along with other Siddhi dependencies to your project.\n\n\n\n\n     \ndependency\n\n        \ngroupId\norg.wso2.extension.siddhi.execution.stats\n/groupId\n\n        \nartifactId\nsiddhi-execution-stats\n/artifactId\n\n        \nversion\nx.x.x\n/version\n\n     \n/dependency\n\n\n\n\n\n\nJenkins Build Status\n\n\n\n\n\n\n\n\n\n\nBranch\n\n\nBuild Status\n\n\n\n\n\n\n\n\n\n\nmaster\n\n\n\n\n\n\n\n\n\n\n\n\nFeatures\n\n\n\n\nmedian\n \n(Aggregate Function)\nThis extension returns the median of aggregated events.\nAs the calculation of the median is performed with the arrival and expiry of each event, it is not recommended to use this extension for large window sizes.\n\n\n\n\nHow to Contribute\n\n\n\n\n\n\nPlease report issues at \nGitHub Issue Tracker\n.\n\n\n\n\n\n\nSend your contributions as pull requests to \nmaster branch\n. \n\n\n\n\n\n\nContact us\n\n\n\n\n\n\nPost your questions with the \n\"Siddhi\"\n tag in \nStackoverflow\n. \n\n\n\n\n\n\nSiddhi developers can be contacted via the mailing lists:\n\n\nDevelopers List   : \ndev@wso2.org\n\n\nArchitecture List : \narchitecture@wso2.org\n\n\n\n\n\n\nSupport\n\n\n\n\n\n\nWe are committed to ensuring support for this extension in production. Our stats approach ensures that all support leverages our open development methodology and is provided by the very same engineers who build the technology. \n\n\n\n\n\n\nFor more details and to take advantage of this stats opportunity contact us via \nhttp://wso2.com/support/\n.", 
             "title": "Welcome"
         }, 
         {
@@ -12,7 +12,7 @@
         }, 
         {
             "location": "/#latest-api-docs", 
-            "text": "Latest API Docs is  1.0.15 .", 
+            "text": "Latest API Docs is  1.0.16 .", 
             "title": "Latest API Docs"
         }, 
         {
@@ -27,7 +27,7 @@
         }, 
         {
             "location": "/#features", 
-            "text": "median   (Aggregate Function) This extension returns the median of aggregated events. As calculation of median is done for each event arrival and expiry, it is not recommended to use this extension for large window sizes.", 
+            "text": "median   (Aggregate Function) This extension returns the median of aggregated events. As the calculation of the median is performed with the arrival and expiry of each event, it is not recommended to use this extension for large window sizes.", 
             "title": "Features"
         }, 
         {
@@ -44,6 +44,26 @@
             "location": "/#support", 
             "text": "We are committed to ensuring support for this extension in production. Our stats approach ensures that all support leverages our open development methodology and is provided by the very same engineers who build the technology.     For more details and to take advantage of this stats opportunity contact us via  http://wso2.com/support/ .", 
             "title": "Support"
+        }, 
+        {
+            "location": "/api/1.0.16/", 
+            "text": "API Docs - v1.0.16\n\n\nStats\n\n\nmedian \n(Aggregate Function)\n\n\nThis extension returns the median of aggregated events.\nAs the calculation of the median is performed with the arrival and expiry of each event, it is not recommended to use this extension for large window sizes.\n\n\n\nSyntax\n\n\nDOUBLE\n stats:median(\nINT|LONG|DOUBLE|FLOAT\n data)\n\n\n\n\n\nQUERY PARAMETERS\n\n\n\n    \n\n        \nName\n\n        \nDescription\n\n        \nDefault Value\n\n        \nPossible Data Types\n\n        \nOptional\n\n        \nDynamic\n\n    \n\n    \n\n        \ndata\n\n        \nThe value that needs to be aggregated in order to obtain its median.\n\n        \n\n        \nINT\nLONG\nDOUBLE\nFLOAT\n\n        \nNo\n\n        \nNo\n\n    \n\n\n\n\nExamples\n\n\nEXAMPLE 1\n\n\nfrom InputStream#window.length(5)\nselect stats:median(value) as medianOfValues\ninsert into OutputStream;\n\n\n\n\n\nThis returns the median of the aggregated values as a 'double' value with the arrival and expiry of each event within the sliding window length of five.", 
+            "title": "1.0.16"
+        }, 
+        {
+            "location": "/api/1.0.16/#api-docs-v1016", 
+            "text": "", 
+            "title": "API Docs - v1.0.16"
+        }, 
+        {
+            "location": "/api/1.0.16/#stats", 
+            "text": "", 
+            "title": "Stats"
+        }, 
+        {
+            "location": "/api/1.0.16/#median-aggregate-function", 
+            "text": "This extension returns the median of aggregated events. As the calculation of the median is performed with the arrival and expiry of each event, it is not recommended to use this extension for large window sizes.  Syntax  DOUBLE  stats:median( INT|LONG|DOUBLE|FLOAT  data)  QUERY PARAMETERS  \n     \n         Name \n         Description \n         Default Value \n         Possible Data Types \n         Optional \n         Dynamic \n     \n     \n         data \n         The value that needs to be aggregated in order to obtain its median. \n         \n         INT LONG DOUBLE FLOAT \n         No \n         No \n       Examples  EXAMPLE 1  from InputStream#window.length(5)\nselect stats:median(value) as medianOfValues\ninsert into OutputStream;  This returns the median of the aggregated values as a 'double' value with the arrival and expiry of each event within the sliding window length of five.", 
+            "title": "median (Aggregate Function)"
         }, 
         {
             "location": "/api/1.0.15/", 
@@ -287,13 +307,13 @@
         }, 
         {
             "location": "/api/latest/", 
-            "text": "API Docs - v1.0.15\n\n\nStats\n\n\nmedian \n(Aggregate Function)\n\n\nThis extension returns the median of aggregated events.\nAs calculation of median is done for each event arrival and expiry, it is not recommended to use this extension for large window sizes. \n\n\n\nSyntax\n\n\nDOUBLE\n stats:median(\nINT|LONG|DOUBLE|FLOAT\n data)\n\n\n\n\n\nQUERY PARAMETERS\n\n\n\n    \n\n        \nName\n\n        \nDescription\n\n        \nDefault Value\n\n        \nPossible Data Types\n\n        \nOptional\n\n        \nDynamic\n\n    \n\n    \n\n        \ndata\n\n        \nThe value that needs to be aggregated for the median.\n\n        \n\n        \nINT\nLONG\nDOUBLE\nFLOAT\n\n        \nNo\n\n        \nNo\n\n    \n\n\n\n\nExamples\n\n\nEXAMPLE 1\n\n\nfrom inputStream#window.length(5)\nselect stats:median(value) as medianOfValues\ninsert into outputStream;\n\n\n\n\n\nThis will returns the median of aggregated values as a double value for each event arrival and expiry of sliding window length 5.", 
+            "text": "API Docs - v1.0.16\n\n\nStats\n\n\nmedian \n(Aggregate Function)\n\n\nThis extension returns the median of aggregated events.\nAs the calculation of the median is performed with the arrival and expiry of each event, it is not recommended to use this extension for large window sizes.\n\n\n\nSyntax\n\n\nDOUBLE\n stats:median(\nINT|LONG|DOUBLE|FLOAT\n data)\n\n\n\n\n\nQUERY PARAMETERS\n\n\n\n    \n\n        \nName\n\n        \nDescription\n\n        \nDefault Value\n\n        \nPossible Data Types\n\n        \nOptional\n\n        \nDynamic\n\n    \n\n    \n\n        \ndata\n\n        \nThe value that needs to be aggregated in order to obtain its median.\n\n        \n\n        \nINT\nLONG\nDOUBLE\nFLOAT\n\n        \nNo\n\n        \nNo\n\n    \n\n\n\n\nExamples\n\n\nEXAMPLE 1\n\n\nfrom InputStream#window.length(5)\nselect stats:median(value) as medianOfValues\ninsert into OutputStream;\n\n\n\n\n\nThis returns the median of the aggregated values as a 'double' value with the arrival and expiry of each event within the sliding window length of five.", 
             "title": "latest"
         }, 
         {
-            "location": "/api/latest/#api-docs-v1015", 
+            "location": "/api/latest/#api-docs-v1016", 
             "text": "", 
-            "title": "API Docs - v1.0.15"
+            "title": "API Docs - v1.0.16"
         }, 
         {
             "location": "/api/latest/#stats", 
@@ -302,7 +322,7 @@
         }, 
         {
             "location": "/api/latest/#median-aggregate-function", 
-            "text": "This extension returns the median of aggregated events. As calculation of median is done for each event arrival and expiry, it is not recommended to use this extension for large window sizes.   Syntax  DOUBLE  stats:median( INT|LONG|DOUBLE|FLOAT  data)  QUERY PARAMETERS  \n     \n         Name \n         Description \n         Default Value \n         Possible Data Types \n         Optional \n         Dynamic \n     \n     \n         data \n         The value that needs to be aggregated for the median. \n         \n         INT LONG DOUBLE FLOAT \n         No \n         No \n       Examples  EXAMPLE 1  from inputStream#window.length(5)\nselect stats:median(value) as medianOfValues\ninsert into outputStream;  This will returns the median of aggregated values as a double value for each event arrival and expiry of sliding window length 5.", 
+            "text": "This extension returns the median of aggregated events. As the calculation of the median is performed with the arrival and expiry of each event, it is not recommended to use this extension for large window sizes.  Syntax  DOUBLE  stats:median( INT|LONG|DOUBLE|FLOAT  data)  QUERY PARAMETERS  \n     \n         Name \n         Description \n         Default Value \n         Possible Data Types \n         Optional \n         Dynamic \n     \n     \n         data \n         The value that needs to be aggregated in order to obtain its median. \n         \n         INT LONG DOUBLE FLOAT \n         No \n         No \n       Examples  EXAMPLE 1  from InputStream#window.length(5)\nselect stats:median(value) as medianOfValues\ninsert into OutputStream;  This returns the median of the aggregated values as a 'double' value with the arrival and expiry of each event within the sliding window length of five.", 
             "title": "median (Aggregate Function)"
         }, 
         {

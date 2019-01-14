@@ -106,7 +106,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#api-docs-v1015" tabindex="1" class="md-skip">
+      <a href="#api-docs-v1016" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -275,6 +275,18 @@
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../1.0.16/" title="1.0.16" class="md-nav__link">
+      1.0.16
+    </a>
+  </li>
+
         
           
           
@@ -559,10 +571,10 @@
                   <a href="https://github.com/wso2-extensions/siddhi-execution-stats/edit/master/docs/api/latest.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="api-docs-v1015">API Docs - v1.0.15<a class="headerlink" href="#api-docs-v1015" title="Permanent link">&para;</a></h1>
+                <h1 id="api-docs-v1016">API Docs - v1.0.16<a class="headerlink" href="#api-docs-v1016" title="Permanent link">&para;</a></h1>
 <h2 id="stats">Stats<a class="headerlink" href="#stats" title="Permanent link">&para;</a></h2>
 <h3 id="median-aggregate-function">median <em><a target="_blank" href="https://wso2.github.io/siddhi/documentation/siddhi-4.0/#aggregate-function">(Aggregate Function)</a></em><a class="headerlink" href="#median-aggregate-function" title="Permanent link">&para;</a></h3>
-<p style="word-wrap: break-word">This extension returns the median of aggregated events.<br>&nbsp;As calculation of median is done for each event arrival and expiry, it is not recommended to use this extension for large window sizes. </p>
+<p style="word-wrap: break-word">This extension returns the median of aggregated events.<br>&nbsp;As the calculation of the median is performed with the arrival and expiry of each event, it is not recommended to use this extension for large window sizes.</p>
 
 <p><span id="syntax" class="md-typeset" style="display: block; font-weight: bold;">Syntax</span></p>
 <div class="codehilite"><pre><span></span>&lt;DOUBLE&gt; stats:median(&lt;INT|LONG|DOUBLE|FLOAT&gt; data)
@@ -581,7 +593,7 @@
     </tr>
     <tr>
         <td style="vertical-align: top">data</td>
-        <td style="vertical-align: top; word-wrap: break-word">The value that needs to be aggregated for the median.</td>
+        <td style="vertical-align: top; word-wrap: break-word">The value that needs to be aggregated in order to obtain its median.</td>
         <td style="vertical-align: top"></td>
         <td style="vertical-align: top">INT<br>LONG<br>DOUBLE<br>FLOAT</td>
         <td style="vertical-align: top">No</td>
@@ -590,13 +602,13 @@
 </table></p>
 <p><span id="examples" class="md-typeset" style="display: block; font-weight: bold;">Examples</span>
 <span id="example-1" class="md-typeset" style="display: block; color: rgba(0, 0, 0, 0.54); font-size: 12.8px; font-weight: bold;">EXAMPLE 1</span></p>
-<div class="codehilite"><pre><span></span>from inputStream#window.length(5)
+<div class="codehilite"><pre><span></span>from InputStream#window.length(5)
 select stats:median(value) as medianOfValues
-insert into outputStream;
+insert into OutputStream;
 </pre></div>
 
 
-<p style="word-wrap: break-word">This will returns the median of aggregated values as a double value for each event arrival and expiry of sliding window length 5.</p>
+<p style="word-wrap: break-word">This returns the median of the aggregated values as a 'double' value with the arrival and expiry of each event within the sliding window length of five.</p>
                 
                   
                 
