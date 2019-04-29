@@ -17,32 +17,23 @@
  */
 package org.wso2.extension.siddhi.execution.stats;
 
-import io.siddhi.core.util.snapshot.state.State;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- * .
- * @param <T>
+ * The MedianAggregator class holds the necessary implementations to manipulate
+ * the median calculation and revel corresponding data to needed classes.
+ *
+ * @param <T> the comparable and mathematically operable type.
  */
-public abstract class MedianAggregatorState<T extends Number & Comparable<T>> extends State {
-
-    private static final String KEY_MEDIAN = "Median";
-    private static final String KEY_COUNT = "Count";
+public abstract class MedianAggregator<T extends Number & Comparable<T>> {
 
     private List<T> list = new ArrayList<>();
-
-    private final Map<String, Object> state = new HashMap<>();
-
     private int count = 0;
-
     private double median = 0.0;
 
-    private double getMedian() {
+    private double calculateMedian() {
         Collections.sort(list);
 
         int midA = count / 2;
@@ -54,45 +45,56 @@ public abstract class MedianAggregatorState<T extends Number & Comparable<T>> ex
     }
 
     @SuppressWarnings("unchecked")
-    public Object processAdd(Object data) {
+    Object processAdd(Object data) {
         list.add((T) data);
         count++;
-        median = getMedian();
+        median = calculateMedian();
         return median;
     }
 
     @SuppressWarnings("unchecked")
-    public Object processRemove(Object data) {
+    Object processRemove(Object data) {
         list.remove((T) data);
         count--;
-        median = getMedian();
+        median = calculateMedian();
         return median;
     }
 
+    /**
+     * All the subclasses of Number does not support '+' and checking
+     * types at compile type could be performance hungry hence keeping
+     * abstract is necessary.
+     *
+     * @param a the first number
+     * @param b the second number
+     * @return the summation of a and b
+     */
     protected abstract double add(T a, T b);
 
-    @Override
-    public boolean canDestroy() {
-        return list.size() == 0 && count == 0 && median == 0.0;
-    }
-
-    @Override
-    public Map<String, Object> snapshot() {
-        state.put(KEY_MEDIAN, this.median);
-        state.put(KEY_COUNT, this.count);
-        return state;
-    }
-
-    @Override
-    public void restore(Map<String, Object> state) {
-        this.median = (Double) state.get(KEY_MEDIAN);
-        this.count = (Integer) state.get(KEY_COUNT);
-    }
-
-    public double reset() {
+    double reset() {
         list = new ArrayList<>();
         count = 0;
         median = 0.0;
         return median;
+    }
+
+    int getCount() {
+        return count;
+    }
+
+    void setCount(int count) {
+        this.count = count;
+    }
+
+    double getMedian() {
+        return median;
+    }
+
+    void setMedian(double median) {
+        this.median = median;
+    }
+
+    int getValueCount() {
+        return list.size();
     }
 }
