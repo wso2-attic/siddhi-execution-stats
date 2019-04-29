@@ -32,28 +32,25 @@
 
 package org.wso2.extension.siddhi.execution.stats;
 
-import org.wso2.siddhi.annotation.Example;
-import org.wso2.siddhi.annotation.Extension;
-import org.wso2.siddhi.annotation.Parameter;
-import org.wso2.siddhi.annotation.ReturnAttribute;
-import org.wso2.siddhi.annotation.util.DataType;
-import org.wso2.siddhi.core.config.SiddhiAppContext;
-import org.wso2.siddhi.core.exception.OperationNotSupportedException;
-import org.wso2.siddhi.core.executor.ExpressionExecutor;
-import org.wso2.siddhi.core.query.selector.attribute.aggregator.AttributeAggregator;
-import org.wso2.siddhi.core.util.config.ConfigReader;
-import org.wso2.siddhi.query.api.definition.Attribute;
+import io.siddhi.annotation.Example;
+import io.siddhi.annotation.Extension;
+import io.siddhi.annotation.Parameter;
+import io.siddhi.annotation.ReturnAttribute;
+import io.siddhi.annotation.util.DataType;
+import io.siddhi.core.config.SiddhiQueryContext;
+import io.siddhi.core.exception.OperationNotSupportedException;
+import io.siddhi.core.executor.ExpressionExecutor;
+import io.siddhi.core.query.processor.ProcessingMode;
+import io.siddhi.core.query.selector.attribute.aggregator.AttributeAggregatorExecutor;
+import io.siddhi.core.util.config.ConfigReader;
+import io.siddhi.core.util.snapshot.state.StateFactory;
+import io.siddhi.query.api.definition.Attribute;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This extension returns the median of aggregated events.
  */
-
 @Extension(
         name = "median",
         namespace = "stats",
@@ -78,11 +75,14 @@ import java.util.Map;
                         "value with the arrival and expiry of each event within the sliding window length of five."
         )
 )
-public class MedianAttributeAggregator extends AttributeAggregator {
-    private MedianAttributeAggregator medianAggregator;
+public class MedianAttributeAggregator extends AttributeAggregatorExecutor<MedianAggregatorState> {
 
-    protected void init(ExpressionExecutor[] expressionExecutors, ConfigReader configReader,
-                        SiddhiAppContext siddhiAppContext) {
+    @Override
+    protected StateFactory<MedianAggregatorState> init(ExpressionExecutor[] expressionExecutors,
+                                                       ProcessingMode processingMode,
+                                                       boolean b,
+                                                       ConfigReader configReader,
+                                                       SiddhiQueryContext siddhiQueryContext) {
         if (expressionExecutors.length != 1) {
             throw new OperationNotSupportedException("Median aggregator has to have exactly 1 " +
                     "parameter, currently " + expressionExecutors.length + " parameters are " +
@@ -93,17 +93,13 @@ public class MedianAttributeAggregator extends AttributeAggregator {
 
         switch (type) {
             case DOUBLE:
-                this.medianAggregator = new MedianAggregatorDouble();
-                break;
+                return () -> new MedianAggregatorStateDouble();
             case INT:
-                this.medianAggregator = new MedianAggregatorInt();
-                break;
+                return () -> new MedianAggregatorStateInteger();
             case FLOAT:
-                this.medianAggregator = new MedianAggregatorFloat();
-                break;
+                return () -> new MedianAggregatorStateFloat();
             case LONG:
-                this.medianAggregator = new MedianAggregatorLong();
-                break;
+                return () -> new MedianAggregatorStateLong();
             default:
                 throw new OperationNotSupportedException("Median not supported for " + type);
         }
@@ -113,274 +109,62 @@ public class MedianAttributeAggregator extends AttributeAggregator {
         return Attribute.Type.DOUBLE;
     }
 
-    public Object processAdd(Object data) {
-        return this.medianAggregator.processAdd(data);
+    @Override
+    public Object processAdd(Object o, MedianAggregatorState medianAggregatorState) {
+        return medianAggregatorState.processAdd(o);
     }
 
-
-    public Object processAdd(Object[] data) {
+    @Override
+    public Object processAdd(Object[] objects, MedianAggregatorState medianAggregatorState) {
         return new IllegalStateException("Median cannot process data array, but found " +
-                Arrays.deepToString(data));
+                Arrays.deepToString(objects));
     }
 
-
-    public Object processRemove(Object data) {
-        return this.medianAggregator.processRemove(data);
+    @Override
+    public Object processRemove(Object o, MedianAggregatorState medianAggregatorState) {
+        return medianAggregatorState.processRemove(o);
     }
 
-    public Object processRemove(Object[] data) {
+    @Override
+    public Object processRemove(Object[] objects, MedianAggregatorState medianAggregatorState) {
         return new IllegalStateException("Median cannot process data array, but found " +
-                Arrays.deepToString(data));
+                Arrays.deepToString(objects));
     }
 
-    @Override public boolean canDestroy() {
-        return this.medianAggregator.canDestroy();
+    @Override
+    public Object reset(MedianAggregatorState medianAggregatorState) {
+        return medianAggregatorState.reset();
     }
 
-    public Object reset() {
-        return this.medianAggregator.reset();
-    }
+    private static class MedianAggregatorStateDouble extends MedianAggregatorState<Double> {
 
-    public void start() {
-    }
-
-    public void stop() {
-    }
-
-    public Map<String, Object> currentState() {
-        return this.medianAggregator.currentState();
-    }
-
-    public void restoreState(Map<String, Object> map) {
-        this.medianAggregator.restoreState(map);
-    }
-
-    private static class MedianAggregatorDouble extends MedianAttributeAggregator {
-
-        private ArrayList<Double> arrayList = new ArrayList<>();
-        private int count = 0;
-        private double median;
-
-        public Object processAdd(Object data) {
-            this.arrayList.add((Double) data);
-            this.count++;
-            this.median = getMedian();
-            return median;
-        }
-
-        private double getMedian() {
-            Collections.sort(this.arrayList);
-
-            int midPointA = this.count / 2;
-            if (this.count % 2 == 0) {
-                int midPointB = midPointA - 1;
-                return (this.arrayList.get(midPointA) + this.arrayList.get(midPointB)) / 2.0;
-            }
-
-            return this.arrayList.get(midPointA);
-        }
-
-        public Object processRemove(Object data) {
-            this.arrayList.remove(data);
-            this.count--;
-            this.median = getMedian();
-            return median;
-        }
-
-        public Object reset() {
-            this.arrayList = new ArrayList<>();
-            this.count = 0;
-            this.median = 0.0;
-            return median;
-        }
-
-        public boolean canDestroy() {
-            return arrayList.size() == 0 && count == 0 && median == 0.0;
-        }
-
-        public Map<String, Object> currentState() {
-            Map<String, Object> state = new HashMap<>();
-            state.put("Median", this.median);
-            state.put("Count", this.count);
-            return state;
-        }
-
-        public void restoreState(Map<String, Object> state) {
-            this.median = (Double) state.get("Median");
-            this.count = (Integer) state.get("Count");
+        @Override
+        protected double add(Double a, Double b) {
+            return a + b;
         }
     }
 
-    private static class MedianAggregatorLong extends MedianAttributeAggregator {
+    private static class MedianAggregatorStateInteger extends MedianAggregatorState<Integer> {
 
-        private ArrayList<Long> arrayList = new ArrayList<>();
-        private int count = 0;
-        private double median;
-
-        public Object processAdd(Object data) {
-            this.arrayList.add((Long) data);
-            this.count++;
-            this.median = getMedian();
-            return median;
-        }
-
-        private double getMedian() {
-            Collections.sort(this.arrayList);
-
-            int midPointA = this.count / 2;
-            if (this.count % 2 == 0) {
-                int midPointB = midPointA - 1;
-                return (this.arrayList.get(midPointA) + this.arrayList.get(midPointB)) / 2.0;
-            }
-            return this.arrayList.get(midPointA);
-        }
-
-        public Object processRemove(Object data) {
-            this.arrayList.remove(data);
-            this.count--;
-            this.median = getMedian();
-            return median;
-        }
-
-        public Object reset() {
-            this.arrayList = new ArrayList<>();
-            this.count = 0;
-            this.median = 0.0;
-            return median;
-        }
-
-        public boolean canDestroy() {
-            return arrayList.size() == 0 && count == 0 && median == 0.0;
-        }
-
-        public Map<String, Object> currentState() {
-            Map<String, Object> state = new HashMap<>();
-            state.put("Median", this.median);
-            state.put("Count", this.count);
-            return state;
-        }
-
-        public void restoreState(Map<String, Object> state) {
-            this.median = (Double) state.get("Median");
-            this.count = (Integer) state.get("Count");
-
+        @Override
+        protected double add(Integer a, Integer b) {
+            return a + b;
         }
     }
 
-    private static class MedianAggregatorFloat extends MedianAttributeAggregator {
+    private static class MedianAggregatorStateFloat extends MedianAggregatorState<Float> {
 
-        private ArrayList<Float> arrayList = new ArrayList<>();
-        private int count = 0;
-        private double median;
-
-        public Object processAdd(Object data) {
-            this.arrayList.add((Float) data);
-            this.count++;
-            this.median = getMedian();
-            return median;
-        }
-
-        private double getMedian() {
-            Collections.sort(this.arrayList);
-            int midPointA = this.count / 2;
-            if (this.count % 2 == 0) {
-                int midPointB = midPointA - 1;
-                return (this.arrayList.get(midPointA) + this.arrayList.get(midPointB)) / 2.0;
-            }
-            return this.arrayList.get(midPointA);
-        }
-
-        public Object processRemove(Object data) {
-            this.arrayList.remove(data);
-            this.count--;
-            this.median = getMedian();
-            return median;
-        }
-
-
-        public Object reset() {
-            this.arrayList = new ArrayList<>();
-            this.count = 0;
-            this.median = 0.0;
-            return this.median;
-        }
-
-        public boolean canDestroy() {
-            return arrayList.size() == 0 && count == 0 && median == 0.0;
-        }
-
-        public Map<String, Object> currentState() {
-            Map<String, Object> state = new HashMap<>();
-            state.put("Median", this.median);
-            state.put("Count", this.count);
-            return state;
-        }
-
-        public void restoreState(Map<String, Object> state) {
-            this.median = (Double) state.get("Median");
-            this.count = (Integer) state.get("Count");
+        @Override
+        protected double add(Float a, Float b) {
+            return a + b;
         }
     }
 
-    private static class MedianAggregatorInt extends MedianAttributeAggregator {
+    private static class MedianAggregatorStateLong extends MedianAggregatorState<Long> {
 
-        private ArrayList<Integer> arrayList = new ArrayList<>();
-        private int count = 0;
-        private double median;
-
-        public Object processAdd(Object data) {
-            this.arrayList.add((Integer) data);
-            this.count++;
-            this.median = getMedian();
-            return median;
-        }
-
-        private Double getMedian() {
-
-            Collections.sort(this.arrayList);
-
-            int midPointA = this.count / 2;
-            if (this.count % 2 == 0) {
-                int midPointB = midPointA - 1;
-                return (this.arrayList.get(midPointA) + this.arrayList.get(midPointB)) / 2.0;
-            }
-
-            return this.arrayList.get(midPointA) * 1.0;
-        }
-
-        public Object processRemove(Object data) {
-            this.arrayList.remove(data);
-            this.count--;
-            this.median = getMedian();
-            return median;
-        }
-
-        public Object reset() {
-            this.arrayList = new ArrayList<>();
-            this.count = 0;
-            this.median = 0.0;
-            return median;
-        }
-
-        public boolean canDestroy() {
-            return arrayList.size() == 0 && count == 0 && median == 0.0;
-        }
-
-        public Map<String, Object> currentState() {
-            Map<String, Object> state = new HashMap<>();
-            state.put("Median", this.median);
-            state.put("Count", this.count);
-            return state;
-        }
-
-        public void restoreState(Map<String, Object> state) {
-            this.median = (Double) state.get("Median");
-            this.count = (Integer) state.get("Count");
-
+        @Override
+        protected double add(Long a, Long b) {
+            return a + b;
         }
     }
 }
-
-
-
-
