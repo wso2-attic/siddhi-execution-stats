@@ -122,6 +122,7 @@ public class MedianAttributeAggregator extends AttributeAggregatorExecutor<Media
         return this.type;
     }
 
+    @SuppressWarnings({"unchecked", "RedundantCast"})
     @Override
     public Object processAdd(Object data, ExtensionState state) {
         switch (this.type) {
@@ -153,6 +154,7 @@ public class MedianAttributeAggregator extends AttributeAggregatorExecutor<Media
         return state.median;
     }
 
+    @SuppressWarnings("unchecked")
     private double getMedian(ExtensionState state) {
         Collections.sort(this.arrayListMap.get(this.type));
 
